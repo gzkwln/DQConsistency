@@ -4,7 +4,7 @@ README
 WRKDQCONSISTENCY SKPv2   
 /*======================================================
 
-0- Getting errors in running view files for views related to WRKMATCHREVIEW are ok, uploading errors in pages for the "system selection" page is ok, and getting errors for columns, and rules against this page is ok as well.
+0- Getting errors in running SQL view files for views related to WRKMATCHREVIEW are ok, uploading errors in pages for the "system selection" page is ok, and getting errors for columns, and rules against this page is ok as well.
 
 1- Run files 110-130 in SQL 
 
