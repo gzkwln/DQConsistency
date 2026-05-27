@@ -1,4 +1,4 @@
-USE [WRKDQHARMONIZE]
+USE [WRKDQCONSISTENCY]
 GO
 /****** Object:  UserDefinedFunction [dbo].[boaGetWord]    Script Date: 4/23/2026 1:34:07 PM ******/
 SET ANSI_NULLS ON
@@ -36,7 +36,7 @@ BEGIN
 	SET @j = 0
 	SET @k = 1
 	SET @i = 1
-	SET @varString = WRKDQHARMONIZE.dbo.boaTrim(@varString)
+	SET @varString = WRKDQCONSISTENCY.dbo.boaTrim(@varString)
 						 + ' ^'
 
 	WHILE( @i <= Len(@varString) )
