@@ -1,18 +1,18 @@
 # DQConsistency
 
 README
-WRKDQHARMONIZE SKPv2   
+WRKDQCONSISTENCY SKPv2   
 /*======================================================
 
 1- Run files 110-130 in SQL 
 
 2- SKP > Catalog > Systems > <System used for Construct> > Connections > Create Connections -- usage Profiling, Construct
 
-3- SKP > Catalog > Systems > add Datastore WRKDQHARMONIZE linked to database WRKDQHARMONIZE 
+3- SKP > Catalog > Systems > add Datastore WRKDQCONSISTENCY linked to database WRKDQCONSISTENCY 
 
 4- Syniti Construct > System Administration > Data Sources 
 	-- Add new DataSource with file 200 via excel integration - and set the created connection in Connection ID and Connector ID 
-	-- Once created data source, validate, and add SKP Datastore (WRKDQHARMONIZE) to vertical view and test connection
+	-- Once created data source, validate, and add SKP Datastore (WRKDQCONSISTENCY) to vertical view and test connection
 
 5- Syniti Construct > System Administration > WebApps -- Add new WebApp with Excel Integration - File 210 - Validate the WebApp. Remove the Static Page that has been created automatically.
 
