@@ -1,4 +1,4 @@
-USE [WRKDQHARMONIZE]
+USE [WRKDQCONSISTENCY]
 GO
 /****** Object:  View [dbo].[webDatasetTableList]    Script Date: 4/23/2026 1:17:09 PM ******/
 SET ANSI_NULLS ON
@@ -163,12 +163,12 @@ AS
 		 SUM(CASE WHEN ztAttributeConfig.zActive = 1 AND ConsistencyCheckMadeByDecision = 1 THEN 1 ELSE 0 END) AS GoToConsistencyCheckMadeByDecision,
 		 SUM(CASE WHEN ztAttributeConfig.zActive = 1 AND ConsistencyCheckByProposedMatchGroup = 1 THEN 1 ELSE 0 END) AS GoToConsistencyCheckByProposedMatchGroup,
 		 NULL AS AttributeConfiguration
-  FROM   WRKDQHARMONIZE.dbo.ztParameter
+  FROM   WRKDQCONSISTENCY.dbo.ztParameter
   LEFT OUTER JOIN WRKMATCHREVIEW.dbo.xtGMR_Selection
   ON ztParameter.zCheckWithinGroup = xtGMR_Selection.zCheckWithinGroup
-  LEFT OUTER JOIN WRKDQHARMONIZE.dbo.ztAttributeConfig
+  LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.ztAttributeConfig
   ON ztParameter.zCheckWithinGroup = ztAttributeConfig.zCheckWithinGroup
-  LEFT OUTER JOIN WRKDQHARMONIZE.dbo.ztAttributeConsistencySummary
+  LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.ztAttributeConsistencySummary
   ON [ztAttributeConfig].AttributeID = ztAttributeConsistencySummary.AttributeID
   AND ztAttributeConfig.zActive = 1
   GROUP BY ztParameter.boaStatus,
@@ -198,7 +198,7 @@ SELECT ztParameter.[ParameterID]
       ,ztParameter.[zCheckWithinGroup]
       ,CASE WHEN ztParameter.[UnionReports] = 1 THEN 1 ELSE 0 END AS AllInconsistentReports
       
-  FROM [WRKDQHARMONIZE].[dbo].ztParameter
+  FROM [WRKDQCONSISTENCY].[dbo].ztParameter
   INNER JOIN webGMRSystemSelectionHor
   ON ztParameter.ParameterID = webGMRSystemSelectionHor.ParameterID
 GO
@@ -482,7 +482,7 @@ SELECT AttributeID
 	  ,NULL AS CopyEntry
 	  ,MasterDifferentOrBlankCheck
 	  ,zActive
-  FROM [WRKDQHARMONIZE].[dbo].[ztAttributeConfig]
+  FROM [WRKDQCONSISTENCY].[dbo].[ztAttributeConfig]
   INNER JOIN ztDataSource AS [DataSource]
 ON ztAttributeConfig.AttributeDatabase = [DataSource].[Database]
 GO
@@ -511,7 +511,7 @@ SELECT AttributeID
    ,MasterDifferentOrBlankCheck  
    ,CaseSensitive  
    ,zActive  
-  FROM [WRKDQHARMONIZE].[dbo].[ztAttributeConfig]  
+  FROM [WRKDQCONSISTENCY].[dbo].[ztAttributeConfig]  
   INNER JOIN [ztDataSource] AS [DataSource]  
 ON ztAttributeConfig.AttributeDatabase = [DataSource].[Database]
 GO
@@ -557,7 +557,7 @@ SELECT ztAttributeConsistencySummary.[AttributeID]
       ,ztAttributeConsistencySummary.[ConsistentMatchGroups]
       ,ztAttributeConsistencySummary.[InconsistentMatchGroups]
       ,ztAttributeConsistencySummary.[LastRefreshedOn]
-  FROM [WRKDQHARMONIZE].[dbo].[ztAttributeConsistencySummary]
+  FROM [WRKDQCONSISTENCY].[dbo].[ztAttributeConsistencySummary]
   INNER JOIN ztAttributeConfig ON ztAttributeConfig.AttributeID = ztAttributeConsistencySummary.AttributeID
   WHERE ztAttributeConfig.ConsistencyCheckMadeByDecision = 1
   AND Description not like '%zzzz%'
@@ -575,7 +575,7 @@ SELECT ztAttributeConsistencySummary.[AttributeID]
       ,ztAttributeConsistencySummary.[ConsistentRecordsSelect]
       ,ztAttributeConsistencySummary.[InconsistentRecordsSelect]
       ,ztAttributeConsistencySummary.[LastRefreshedOn]
-  FROM [WRKDQHARMONIZE].[dbo].[ztAttributeConsistencySummary]
+  FROM [WRKDQCONSISTENCY].[dbo].[ztAttributeConsistencySummary]
   INNER JOIN ztAttributeConfig ON ztAttributeConfig.AttributeID = ztAttributeConsistencySummary.AttributeID
   WHERE ztAttributeConfig.ConsistencyCheckMadeByDecision = 1
   AND Description not like '%zzzz%'
@@ -785,8 +785,8 @@ SELECT DISTINCT
 , Table_Name as DatasetName
 FROM ztDatasetNamingConvention
 INNER JOIN INFORMATION_SCHEMA.VIEWS
-ON Table_Name + '$' LIKE WRKDQHARMONIZE.dbo.boaGetWord(NamingConvention, 1)+ '%' + WRKDQHARMONIZE.dbo.boaGetWord(NamingConvention, 2) + '$'
---OR Table_Name + '$' LIKE WRKDQHARMONIZE.dbo.boaGetWord(NamingConvention, 1)+ '%' + '$'
+ON Table_Name + '$' LIKE WRKDQCONSISTENCY.dbo.boaGetWord(NamingConvention, 1)+ '%' + WRKDQCONSISTENCY.dbo.boaGetWord(NamingConvention, 2) + '$'
+--OR Table_Name + '$' LIKE WRKDQCONSISTENCY.dbo.boaGetWord(NamingConvention, 1)+ '%' + '$'
 WHERE [Object] = 'View'
 GO
 /****** Object:  View [dbo].[webDatasetLookUpTableList]    Script Date: 4/23/2026 1:17:10 PM ******/
@@ -845,7 +845,7 @@ AS
 SELECT [ID]
       ,[Object]
       ,[NamingConvention]
-  FROM [WRKDQHARMONIZE].[dbo].[ztDatasetNamingConvention]
+  FROM [WRKDQCONSISTENCY].[dbo].[ztDatasetNamingConvention]
 GO
 /****** Object:  View [dbo].[webDatasetSelectFieldsHor]    Script Date: 4/23/2026 1:17:10 PM ******/
 SET ANSI_NULLS ON
@@ -884,7 +884,7 @@ LEFT OUTER JOIN ztSystemTypeTable C  on B.DescriptionTableID=C.SystemTypeTableID
 LEFT OUTER JOIN ztsystemtypetablefield CF on B.DescriptionTableFieldID=CF.SystemTypeTableFieldID and B.DescriptionTableID=CF.SystemTypeTableID 
 LEFT OUTER JOIN ztsystemtypetablefield CL on B.DescriptionTableLanguageFieldID=CL.SystemTypeTableFieldID and B.DescriptionTableID=CL.SystemTypeTableID
 LEFT OUTER JOIN ztsystemtype D on B.SystemTypeID=D.SystemTypeID  
-INNER JOIN WRKDQHARMONIZE.dbo.ztGlobalXrefTargetSystem ON D.SystemTypeID = ztGlobalXrefTargetSystem.SystemTypeID
+INNER JOIN WRKDQCONSISTENCY.dbo.ztGlobalXrefTargetSystem ON D.SystemTypeID = ztGlobalXrefTargetSystem.SystemTypeID
 GO
 /****** Object:  View [dbo].[webDatasetTableColumnsHor]    Script Date: 4/23/2026 1:17:10 PM ******/
 SET ANSI_NULLS ON
@@ -951,7 +951,7 @@ SELECT CheckTableName
 ,Active
 ,Comments
 ,PageID
-,'a07acae9-1ade-499d-8b0e-85e8aef872fd' AS DataSourceID /*WRKDQHARMONIZE*/
+,'a07acae9-1ade-499d-8b0e-85e8aef872fd' AS DataSourceID /*WRKDQCONSISTENCY*/
 ,'Dynamic' AS PageType
 FROM ztGlobalXref
 GO
@@ -1091,12 +1091,12 @@ AS
 		 NULL AS Configuration,
 		 NULL AS AttributeConfiguration,
 		 NULL AS ColumnOrderConfig
-  FROM   WRKDQHARMONIZE.dbo.ztParameter
+  FROM   WRKDQCONSISTENCY.dbo.ztParameter
   LEFT OUTER JOIN WRKMATCHREVIEW.dbo.xtGMR_Selection
   ON ztParameter.zCheckWithinGroup = xtGMR_Selection.zCheckWithinGroup
-  LEFT OUTER JOIN WRKDQHARMONIZE.dbo.ztAttributeConfig
+  LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.ztAttributeConfig
   ON ztParameter.zCheckWithinGroup = ztAttributeConfig.zCheckWithinGroup
-  LEFT OUTER JOIN WRKDQHARMONIZE.dbo.ztAttributeConsistencySummary
+  LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.ztAttributeConsistencySummary
   ON [ztAttributeConfig].AttributeID = ztAttributeConsistencySummary.AttributeID
   AND ztAttributeConfig.zActive = 1
   GROUP BY ztParameter.boaStatus,
