@@ -1,4 +1,4 @@
-USE [WRKDQHARMONIZE]
+USE [WRKDQCONSISTENCY]
 GO
 /****** Object:  StoredProcedure [dbo].[webAttributeConfig_AttributeTableIns]    Script Date: 4/23/2026 1:35:56 PM ******/
 SET ANSI_NULLS ON
@@ -177,7 +177,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -205,7 +205,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -305,7 +305,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM '+@DataSourceName+'.dbo.'+@AttributeTable+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  '+@AttributeTable+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND '+@AttributeTable+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClauseExcel+'
@@ -314,10 +314,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) = 1 ) b
 ON b.'+@MatchGroupIDColumn+' = '+@AttributeTable+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  '+@AttributeTable+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND '+@AttributeTable+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-INNER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+INNER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -433,7 +433,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -442,10 +442,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) = 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-INNER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+INNER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -479,7 +479,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -488,10 +488,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) = 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-INNER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+INNER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -607,7 +607,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -616,10 +616,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) = 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-INNER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+INNER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -651,7 +651,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -660,10 +660,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) = 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-INNER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+INNER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -816,7 +816,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -846,7 +846,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-INNER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+INNER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS  = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -947,7 +947,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM '+@DataSourceName+'.dbo.'+@AttributeTable+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  '+@AttributeTable+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND '+@AttributeTable+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClauseExcel+'
@@ -956,10 +956,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) > 1 ) b
 ON b.'+@MatchGroupIDColumn+' = '+@AttributeTable+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  '+@AttributeTable+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND '+@AttributeTable+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -1077,7 +1077,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -1086,10 +1086,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) > 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' = '+@CheckTable+'.LegacyValue01
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -1126,7 +1126,7 @@ FROM
 (
 SELECT '+@MatchGroupIDColumn+', [Group]
 FROM AttributeTable_'+@AttributeID+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
 '+@WHEREClause+'
@@ -1135,10 +1135,10 @@ GROUP BY '+@MatchGroupIDColumn+', [Group]
 GROUP BY a.'+@MatchGroupIDColumn+'
 HAVING COUNT(*) > 1 ) b
 ON b.'+@MatchGroupIDColumn+' = AttributeTable_'+@AttributeID+'.'+@MatchGroupIDColumn+'
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.'+@CheckTable+'
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.'+@CheckTable+'
 ON  AttributeTable_'+@AttributeID+'.'+@Attribute+' COLLATE SQL_Latin1_General_CP1_CS_AS = '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 AND AttributeTable_'+@AttributeID+'.'+@SourceSystemIDColumn+' = '+@CheckTable+'.SourceSystemID
-LEFT OUTER JOIN WRKDQHARMONIZE.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
+LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.web'+@CheckTable+'LegacyValue01DescriptionList
 ON '+@CheckTable+'.zSource = web'+@CheckTable+'LegacyValue01DescriptionList.zSource
 AND '+@CheckTable+'.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS = web'+@CheckTable+'LegacyValue01DescriptionList.LegacyValue01 COLLATE SQL_Latin1_General_CP1_CS_AS
 LEFT OUTER JOIN webWebAppCatalogLanguagePhraseList ON '''+@Attribute+''' = webWebAppCatalogLanguagePhraseList.Phrase
@@ -2160,7 +2160,7 @@ GO
 
 CREATE PROCEDURE [dbo].[webAttributeConfigCopyEntryIns] @AttributeID NVARCHAR(50), @boaUserID NVARCHAR(50)
 AS
-INSERT INTO WRKDQHARMONIZE.[dbo].[ztAttributeConfig]
+INSERT INTO WRKDQCONSISTENCY.[dbo].[ztAttributeConfig]
 ([Area]
       ,[Description]
       ,[AttributeDatabase]
@@ -2198,7 +2198,7 @@ SELECT [Area]
       ,@boaUserID
       ,getdate()
       ,CONCAT('Copy From ',@AttributeID)
-  FROM [WRKDQHARMONIZE].[dbo].[ztAttributeConfig]
+  FROM [WRKDQCONSISTENCY].[dbo].[ztAttributeConfig]
   WHERE AttributeID = @AttributeID
 GO
 /****** Object:  StoredProcedure [dbo].[webAttributeConfigSelectAttributeTableUpdSel]    Script Date: 4/23/2026 1:35:56 PM ******/
@@ -3126,9 +3126,9 @@ SELECT-- WaveID
       --,TargetDescription
       --,TargetPriority
       ,CheckTableName
-  FROM WRKDQHARMONIZE.dbo.webXrefMappingsSel
+  FROM WRKDQCONSISTENCY.dbo.webXrefMappingsSel
  
- TRUNCATE TABLE [WRKDQHARMONIZE].dbo.[ztGlobalXref_AllValuesByTarget]
+ TRUNCATE TABLE [WRKDQCONSISTENCY].dbo.[ztGlobalXref_AllValuesByTarget]
  
 OPEN cur;
 FETCH NEXT FROM cur into @WaveProcessAreaObjectTargetID, @CheckTableName
@@ -3139,7 +3139,7 @@ BEGIN
  
 SET @SQLQuery = '
  
-      INSERT INTO [WRKDQHARMONIZE].dbo.[ztGlobalXref_AllValuesByTarget]
+      INSERT INTO [WRKDQCONSISTENCY].dbo.[ztGlobalXref_AllValuesByTarget]
                   ([CheckTableName]
 				   ,[Target]
                    ,[WaveProcessAreaObjectTargetID]
@@ -3164,12 +3164,12 @@ SET @SQLQuery = '
 			  ,'+@CheckTableName+'.[TargetValue03]
 			  ,'+@CheckTableName+'.[zRelevant]
               , getdate() AS SnapShotOn
-       FROM   WRKDQHARMONIZE.dbo.ztGlobalXref
+       FROM   WRKDQCONSISTENCY.dbo.ztGlobalXref
 	   CROSS JOIN [dbo].[ztGlobalXrefTargetSystem]
              /* LEFT OUTER JOIN [DataGarage].dbo.[dgTargetSourceTable]
-                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
                               AND [Target] = ztGlobalXrefTargetSystem.TargetSystem*/
-	   CROSS JOIN WRKDQHARMONIZE.dbo.'+@CheckTableName+'
+	   CROSS JOIN WRKDQCONSISTENCY.dbo.'+@CheckTableName+'
 	   --WHERE ztGlobalXref.[Active] = 0
        )
  
@@ -3472,7 +3472,7 @@ GO
   AS
  UPDATE ztGlobalXref
  SET AutoMapValuesOn = getdate()
- FROM WRKDQHARMONIZE.dbo.ztGlobalXref
+ FROM WRKDQCONSISTENCY.dbo.ztGlobalXref
  WHERE CheckTableName = @CheckTableName
 GO
 /****** Object:  StoredProcedure [dbo].[webGlobalXrefcMapCheckTableIns]    Script Date: 4/23/2026 1:35:56 PM ******/
@@ -3492,10 +3492,10 @@ AS
                        1                                 AS Active,
                        'Automatically inserted from Map' AS Comments
        FROM   cMap_webTargetFieldMappingHor
-              LEFT OUTER JOIN WRKDQHARMONIZE.dbo.ztGlobalXref
-                           ON WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName = cMap_webTargetFieldMappingHor.CheckTable
-		      INNER JOIN WRKDQHARMONIZE.dbo.Console_webTargetLookupTableHor 
-                           ON WRKDQHARMONIZE.dbo.Console_webTargetLookupTableHor.ValueTableName = cMap_webTargetFieldMappingHor.CheckTable
+              LEFT OUTER JOIN WRKDQCONSISTENCY.dbo.ztGlobalXref
+                           ON WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName = cMap_webTargetFieldMappingHor.CheckTable
+		      INNER JOIN WRKDQCONSISTENCY.dbo.Console_webTargetLookupTableHor 
+                           ON WRKDQCONSISTENCY.dbo.Console_webTargetLookupTableHor.ValueTableName = cMap_webTargetFieldMappingHor.CheckTable
        WHERE  ISNULL(CheckTable, '') <> ''
               AND CheckTableName IS NULL
 			  AND [Type] = 'Configuration')
@@ -3512,7 +3512,7 @@ GO
   AS
  UPDATE ztGlobalXref
  SET CreateCheckTableOn = getdate()
- FROM WRKDQHARMONIZE.dbo.ztGlobalXref
+ FROM WRKDQCONSISTENCY.dbo.ztGlobalXref
  WHERE CheckTableName = @CheckTableName
 GO
 /****** Object:  StoredProcedure [dbo].[webGlobalXrefCreateCheckTableGroupGlobalXRef_PowerUserIns]    Script Date: 4/23/2026 1:35:56 PM ******/
@@ -3947,7 +3947,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
---USE WRKDQHARMONIZE
+--USE WRKDQCONSISTENCY
 ----GO 
 
 --EXEC [webGlobalXrefDataGarageInsertCheckTableIns] 
@@ -3990,14 +3990,14 @@ AS
               ''CRANPORT''       AS [PackageType],
   getdate() AS AddedOn,
   ''webGlobalXrefDataGarageInsertCheckTableIns'' AS AddedVia
-       FROM   WRKDQHARMONIZE.dbo.ztGlobalXref
+       FROM   WRKDQCONSISTENCY.dbo.ztGlobalXref
               LEFT OUTER JOIN [DataGarage].dbo.[dgTargetSourceTable]
-                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
                               AND [Target] = '''
                           + @Target + '''
 				LEFT OUTER JOIN DSPCommon.dbo.ztSystemTypeTable 
 						   ON DSPCommon.dbo.ztSystemTypeTable.SystemTypeID = '''+@SystemTypeID+'''
-								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
 
               WHERE  [Table] IS NULL AND DSPCommon.dbo.ztSystemTypeTable.TableName IS NOT NULL)
 
@@ -4017,14 +4017,14 @@ AS
               ''CRANPORT''       AS [PackageType],
   getdate() AS AddedOn,
   ''webGlobalXrefDataGarageInsertCheckTableIns'' AS AddedVia
-       FROM   WRKDQHARMONIZE.dbo.ztGlobalXref
+       FROM   WRKDQCONSISTENCY.dbo.ztGlobalXref
               LEFT OUTER JOIN [DataGarage].dbo.[dgTargetSourceTable]
-                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQHARMONIZE.dbo.ztGlobalXref.DescriptionTable01
+                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQCONSISTENCY.dbo.ztGlobalXref.DescriptionTable01
                               AND [Target] = '''
                           + @Target + '''
 			LEFT OUTER JOIN DSPCommon.dbo.ztSystemTypeTable 
 						   ON DSPCommon.dbo.ztSystemTypeTable.SystemTypeID = '''+@SystemTypeID+'''
-								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
        WHERE  [Table] IS NULL AND DescriptionTable01 IS NOT NULL AND DSPCommon.dbo.ztSystemTypeTable.TableName IS NOT NULL)
 '
 
@@ -4047,14 +4047,14 @@ AS
               ''CRANPORT''       AS [PackageType],
   getdate() AS AddedOn,
   ''webGlobalXrefDataGarageInsertCheckTableIns'' AS AddedVia
-       FROM   WRKDQHARMONIZE.dbo.ztGlobalXref
+       FROM   WRKDQCONSISTENCY.dbo.ztGlobalXref
               LEFT OUTER JOIN [DataGarage].dbo.[dgTargetSourceTable]
-                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQHARMONIZE.dbo.ztGlobalXref.DescriptionTable02
+                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQCONSISTENCY.dbo.ztGlobalXref.DescriptionTable02
                               AND [Target] = '''
                           + @Target + '''
 			  LEFT OUTER JOIN DSPCommon.dbo.ztSystemTypeTable 
 						   ON DSPCommon.dbo.ztSystemTypeTable.SystemTypeID = '''+@SystemTypeID+'''
-								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
        WHERE  [Table] IS NULL AND DescriptionTable02 IS NOT NULL AND DSPCommon.dbo.ztSystemTypeTable.TableName IS NOT NULL)
 
    /*DescriptionTables*/
@@ -4073,14 +4073,14 @@ AS
               ''CRANPORT''       AS [PackageType],
   getdate() AS AddedOn,
   ''webGlobalXrefDataGarageInsertCheckTableIns'' AS AddedVia
-       FROM   WRKDQHARMONIZE.dbo.ztGlobalXref
+       FROM   WRKDQCONSISTENCY.dbo.ztGlobalXref
               LEFT OUTER JOIN [DataGarage].dbo.[dgTargetSourceTable]
-                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQHARMONIZE.dbo.ztGlobalXref.DescriptionTable03
+                           ON [DataGarage].dbo.[dgTargetSourceTable].[Table] = WRKDQCONSISTENCY.dbo.ztGlobalXref.DescriptionTable03
                               AND [Target] = '''
                           + @Target + '''
 LEFT OUTER JOIN DSPCommon.dbo.ztSystemTypeTable 
 						   ON DSPCommon.dbo.ztSystemTypeTable.SystemTypeID = '''+@SystemTypeID+'''
-								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQHARMONIZE.dbo.ztGlobalXref.CheckTableName
+								AND DSPCommon.dbo.ztSystemTypeTable.TableName = WRKDQCONSISTENCY.dbo.ztGlobalXref.CheckTableName
        WHERE  [Table] IS NULL AND DescriptionTable03 IS NOT NULL AND DSPCommon.dbo.ztSystemTypeTable.TableName IS NOT NULL)
 
 '
@@ -6199,7 +6199,7 @@ GO
   AS
  UPDATE ztGlobalXref
  SET InsertSourceValuesOn = getdate()
- FROM WRKDQHARMONIZE.dbo.ztGlobalXref
+ FROM WRKDQCONSISTENCY.dbo.ztGlobalXref
  WHERE CheckTableName = @CheckTableName
 GO
 /****** Object:  StoredProcedure [dbo].[webGlobalXrefMappedValuesUpd]    Script Date: 4/23/2026 1:35:56 PM ******/
